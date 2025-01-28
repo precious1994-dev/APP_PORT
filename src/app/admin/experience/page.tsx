@@ -9,7 +9,8 @@ interface Experience {
   title: string
   company: string
   location: string
-  period: string
+  startDate: string
+  endDate?: string
   type: string
   description: string
   tags: string[]
@@ -104,7 +105,7 @@ export default function ExperiencePage() {
                 </h2>
                 <p className="text-gray-400 mb-1">{experience.company}</p>
                 <p className="text-gray-400 text-sm mb-4">
-                  {experience.location} • {experience.type} • {experience.period}
+                  {experience.location} • {experience.type} • {new Date(experience.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - {experience.endDate ? new Date(experience.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Present'}
                 </p>
                 <p className="text-gray-400 mb-4">{experience.description}</p>
                 <div className="flex flex-wrap gap-2 mb-4">

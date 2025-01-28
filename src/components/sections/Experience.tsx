@@ -160,7 +160,7 @@ const Experience = () => {
                     <h3 className="text-white dark:text-gray-900 text-xl font-medium">{exp.company}</h3>
                     <div className="flex items-center gap-4">
                       <span className="text-gray-300 dark:text-gray-600 text-sm">
-                        {exp.startDate} - {exp.endDate || 'Present'}
+                        {new Date(exp.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - {exp.endDate ? new Date(exp.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Present'}
                       </span>
                       {/* Arrow Icon - Now part of the header */}
                       <div className="hidden md:flex items-center justify-center w-8 h-8 rounded-full bg-white/10 dark:bg-gray-900/10 group-hover:bg-white/20 dark:group-hover:bg-gray-900/20 transition-colors">

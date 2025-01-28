@@ -8,7 +8,8 @@ interface Experience {
   title: string
   company: string
   location: string
-  period: string
+  startDate: string
+  endDate?: string
   type: string
   description: string
   tags: string[]
@@ -22,12 +23,26 @@ interface Props {
   onSubmit: () => void
 }
 
+interface FormData {
+  title: string
+  company: string
+  location: string
+  startDate: string
+  endDate?: string
+  type: string
+  description: string
+  tags: string[]
+  highlights: string[]
+  order: number
+}
+
 export default function ExperienceForm({ experience, onClose, onSubmit }: Props) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     title: '',
     company: '',
     location: '',
-    period: '',
+    startDate: '',
+    endDate: '',
     type: '',
     description: '',
     tags: [''],
@@ -173,15 +188,28 @@ export default function ExperienceForm({ experience, onClose, onSubmit }: Props)
             </div>
             <div>
               <label className="block text-sm font-medium text-white mb-2">
-                Period
+                Start Date
               </label>
               <input
-                type="text"
-                name="period"
-                value={formData.period}
+                type="date"
+                name="startDate"
+                value={formData.startDate}
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-2 bg-white/[0.03] border border-white/10 rounded-lg text-white focus:border-white/20 transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-white mb-2">
+                End Date
+              </label>
+              <input
+                type="date"
+                name="endDate"
+                value={formData.endDate}
+                onChange={handleChange}
+                className="w-full px-4 py-2 bg-white/[0.03] border border-white/10 rounded-lg text-white focus:border-white/20 transition-colors"
+                placeholder="Leave empty for current position"
               />
             </div>
             <div>
