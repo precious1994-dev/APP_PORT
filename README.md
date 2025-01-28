@@ -1,6 +1,6 @@
-# Modern Portfolio Website
+# Portfolio App
 
-A modern, animated portfolio website built with Next.js, TypeScript, TailwindCSS, and Framer Motion. Perfect for web designers and frontend developers to showcase their work.
+A modern portfolio application built with Next.js, TypeScript, and TailwindCSS.
 
 ## Features
 
