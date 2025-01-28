@@ -13,7 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@auth/core": "^0.37.4",
+    "@auth/core": "^0.34.2",
     "@auth/mongodb-adapter": "^3.7.4",
     "@emailjs/browser": "^4.4.1",
     "framer-motion": "^10.16.4",
