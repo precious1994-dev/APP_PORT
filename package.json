@@ -1,0 +1,41 @@
+{
+  "name": "portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@auth/core": "^0.37.4",
+    "@auth/mongodb-adapter": "^3.7.4",
+    "@emailjs/browser": "^4.4.1",
+    "framer-motion": "^10.16.4",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.5",
+    "next": "13.5.6",
+    "next-auth": "^4.24.11",
+    "next-themes": "^0.4.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.11.0",
+    "react-tsparticles": "^2.12.2",
+    "tsparticles": "^3.8.0",
+    "tsparticles-slim": "^2.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.9",
+    "@types/react": "^18.2.33",
+    "@types/react-dom": "^18.2.14",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5",
+    "typescript": "^5.2.2"
+  }
+}
