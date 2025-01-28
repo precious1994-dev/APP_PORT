@@ -10,8 +10,16 @@ cloudinary.config({
 
 export async function POST(request: NextRequest) {
   try {
+    // Log environment variables (without secrets)
+    console.log('Cloudinary config check:', {
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      hasApiKey: !!process.env.CLOUDINARY_API_KEY,
+      hasApiSecret: !!process.env.CLOUDINARY_API_SECRET
+    });
+
     const session = await getServerSession();
     if (!session) {
+      console.log('Auth failed: No session found');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -19,17 +27,26 @@ export async function POST(request: NextRequest) {
     const file = formData.get('file') as File;
 
     if (!file) {
+      console.log('No file provided in request');
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
+
+    console.log('File details:', {
+      type: file.type,
+      size: file.size,
+      name: file.name
+    });
 
     // Check file type
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
     if (!allowedTypes.includes(file.type)) {
+      console.log('Invalid file type:', file.type);
       return NextResponse.json({ error: 'Invalid file type' }, { status: 400 });
     }
 
     // Check file size (2MB limit)
     if (file.size > 2 * 1024 * 1024) {
+      console.log('File too large:', file.size);
       return NextResponse.json({ error: 'File size too large' }, { status: 400 });
     }
 
@@ -38,14 +55,26 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(arrayBuffer);
     const base64String = `data:${file.type};base64,${buffer.toString('base64')}`;
 
-    // Upload to Cloudinary
+    console.log('Attempting Cloudinary upload...');
+    // Upload to Cloudinary with unique filename
+    const timestamp = Date.now();
     const result = await cloudinary.uploader.upload(base64String, {
-      folder: 'portfolio'
+      folder: 'portfolio',
+      public_id: `upload_${timestamp}`,
+      overwrite: true
     });
+    console.log('Upload successful:', result.secure_url);
 
     return NextResponse.json({ url: result.secure_url });
-  } catch (error) {
-    console.error('Upload error:', error);
-    return NextResponse.json({ error: 'Failed to upload file' }, { status: 500 });
+  } catch (error: any) {
+    console.error('Upload error details:', {
+      message: error?.message || 'Unknown error',
+      name: error?.name || 'Error',
+      stack: error?.stack || ''
+    });
+    return NextResponse.json({ 
+      error: 'Failed to upload file',
+      details: error?.message || 'Unknown error'
+    }, { status: 500 });
   }
 } 
