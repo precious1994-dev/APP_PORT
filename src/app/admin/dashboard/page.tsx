@@ -1,8 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { FiBriefcase, FiFolder } from 'react-icons/fi'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { FiBriefcase, FiFolder } from 'react-icons/fi'
+
+export const dynamic = 'force-dynamic'
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({
@@ -14,8 +16,8 @@ export default function DashboardPage() {
     const fetchStats = async () => {
       try {
         const [experiencesRes, projectsRes] = await Promise.all([
-          fetch('/api/experiences/count'),
-          fetch('/api/projects/count'),
+          fetch('/api/experiences/count', { cache: 'no-store' }),
+          fetch('/api/projects/count', { cache: 'no-store' }),
         ])
         
         const [experiences, projects] = await Promise.all([

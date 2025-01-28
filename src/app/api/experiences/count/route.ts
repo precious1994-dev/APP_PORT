@@ -3,6 +3,8 @@ import { getServerSession } from 'next-auth'
 import connectDB from '@/lib/mongodb'
 import Experience from '@/models/Experience'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   try {
     const session = await getServerSession()
