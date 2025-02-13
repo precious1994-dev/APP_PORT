@@ -38,14 +38,14 @@ export async function POST(request: NextRequest) {
     });
 
     // Check file type
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
     if (!allowedTypes.includes(file.type)) {
       console.log('Invalid file type:', file.type);
       return NextResponse.json({ error: 'Invalid file type' }, { status: 400 });
     }
 
-    // Check file size (2MB limit)
-    if (file.size > 2 * 1024 * 1024) {
+    // Check file size (5MB limit)
+    if (file.size > 5 * 1024 * 1024) {
       console.log('File too large:', file.size);
       return NextResponse.json({ error: 'File size too large' }, { status: 400 });
     }
