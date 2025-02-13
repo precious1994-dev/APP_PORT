@@ -2,11 +2,28 @@ import { v2 as cloudinary } from 'cloudinary';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 
+// Validate required environment variables
+const requiredEnvVars = {
+  CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET
+};
+
+// Check for missing environment variables
+const missingEnvVars = Object.entries(requiredEnvVars)
+  .filter(([_, value]) => !value)
+  .map(([key]) => key);
+
+if (missingEnvVars.length > 0) {
+  console.error('Missing required environment variables:', missingEnvVars);
+  throw new Error(`Missing required environment variables: ${missingEnvVars.join(', ')}`);
+}
+
 // Configure Cloudinary with environment variables
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+  api_key: process.env.CLOUDINARY_API_KEY!,
+  api_secret: process.env.CLOUDINARY_API_SECRET!
 });
 
 export async function POST(request: NextRequest) {
@@ -15,7 +32,12 @@ export async function POST(request: NextRequest) {
     console.log('Cloudinary config check:', {
       cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
       hasApiKey: !!process.env.CLOUDINARY_API_KEY,
-      hasApiSecret: !!process.env.CLOUDINARY_API_SECRET
+      hasApiSecret: !!process.env.CLOUDINARY_API_SECRET,
+      configObject: {
+        cloud_name: cloudinary.config().cloud_name,
+        hasApiKey: !!cloudinary.config().api_key,
+        hasApiSecret: !!cloudinary.config().api_secret
+      }
     });
 
     const session = await getServerSession();
